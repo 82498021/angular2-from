@@ -1,0 +1,50 @@
+<h1>
+  {{title}}
+</h1>
+<style>
+<!--
+.ng-valid[required], .ng-valid{border-left: #42A948 5px solid;}
+.ng-invalid:not(form){border-left: #a94442 5px solid;}
+
+-->
+</style>
+
+<form [formGroup]="myForm" autocomplete="off" novalidate style="border: 0px;">
+
+    <fieldset>
+        <legend>Summary</legend>
+        <div>
+            <label>Title:</label>
+            <!--<input name="title" [(ngModel)]="lesson.title" required minlength="5" maxlength="10">-->
+            <input formControlName="title">
+            <div *ngIf="myForm.controls.title.dirty && myForm.controls.title.errors?.required">
+                 this is not empty
+            </div>
+            <div *ngIf="myForm.controls.title.dirty && myForm.controls.title.errors?.titleExists">
+                 this title alredy exists!
+            </div>
+            <div *ngIf="myForm.controls.title.dirty && myForm.controls.title.errors?.minlength">
+                 this title min 6!
+            </div>
+        </div>
+        <div>
+            <label>Duration:</label>
+            <!--<input name="duration" [(ngModel)]="lesson.duration" pattern="[0-9]+">-->
+            <input formControlName="duration">
+        </div>
+        <div>
+            <label>Description::</label>
+          <textarea formControlName="description"></textarea>
+        </div>
+        <!--<div>
+            <label>Level:</label>
+            <input type="radio" name="level" value="BEGINNER" [(ngModel)]="lesson.level"> Beginner
+            <input type="radio" name="level" value="ADVANCED" [(ngModel)]="lesson.level"> Advanced
+        </div>-->
+    </fieldset>
+    <p>
+      <button type="submit" (click)="partialUpdate()">partialUpdate</button>
+      <button type="submit" (click)="fullUpdate()">fullUpdate</button>
+      <button type="submit" (click)="reset()" [disabled]="!myForm.valid">Reset</button>
+    </p>
+</form>
